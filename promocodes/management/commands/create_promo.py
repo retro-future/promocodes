@@ -47,14 +47,28 @@ class PromoCodesContext:
         with open("data_file.json", "w") as fp:
             json.dump(self.json_data, fp)
 
+    def check(self, code: str):
+        if not self.json_data:
+            return "File is empty"
+        code_list = []
+        for code_array in self.json_data.values():
+            code_list.extend(code_array)
+        if code not in code_list:
+            return "Code doesn't exists"
+        else:
+            for group, values in self.json_data.items():
+                for value in values:
+                    if code == value:
+                        return group
 
 
-mypromo = PromoCode(10, "test34")
-mypromo1 = PromoCode(10, "test12")
-mypromo2 = PromoCode(10, "test23")
+# mypromo = PromoCode(10, "test34")
+# mypromo1 = PromoCode(10, "test12")
+# mypromo2 = PromoCode(10, "test23")
 
 mypromocodes = PromoCodesContext()
-mypromocodes.add(mypromo)
-mypromocodes.add(mypromo1)
-mypromocodes.add(mypromo2)
-mypromocodes.delete(mypromo2)
+# mypromocodes.add(mypromo)
+# mypromocodes.add(mypromo1)
+# mypromocodes.add(mypromo2)
+# mypromocodes.delete(mypromo2)
+print(mypromocodes.check(code="GzxSIXKb"))
