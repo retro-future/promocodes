@@ -25,7 +25,7 @@ class PromoCode:
 class PromoCodesContext:
     def __init__(self):
         try:
-            with open("data_file.json") as fp:
+            with open("data_file.json", encoding="utf-8") as fp:
                 self.json_data = json.load(fp)
         except FileNotFoundError:
             self.json_data = {}
@@ -33,8 +33,11 @@ class PromoCodesContext:
     def add(self, promo_code: PromoCode):
         group = promo_code.group
         codes = promo_code.codes
-        self.json_data[group] = codes
-        with open("data_file.json", "w") as fp:
+        if not self.json_data.get(group):
+            self.json_data[group] = codes
+        else:
+            self.json_data[group].extend(codes)
+        with open("data_file.json", "w", encoding="utf-8") as fp:
             json.dump(self.json_data, fp)
         print("successfully added")
 
