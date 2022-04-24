@@ -52,17 +52,17 @@ class PromoCodesContext:
 
     def check(self, code: str):
         if not self.json_data:
-            print("файл пуст")
+            print("Json file is empty")
             return
         code_list = []
         for code_array in self.json_data.values():
             code_list.extend(code_array)
         if code not in code_list:
-            print("код не существует")
+            print("code doesn't exists")
             return
         else:
             for group, values in self.json_data.items():
                 for value in values:
                     if code == value:
-                        print(f"код существует группа = {group}")
+                        print(f"code exists group = {group}")
                         return group
